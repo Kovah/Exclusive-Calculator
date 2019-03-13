@@ -16,13 +16,29 @@ window.app = {
     itch: 30
   },
   price: 0,
-  funding: 0
+  funding: 0,
+  platformProfits: 0,
+  platforms: {
+    epic: 'Epic Store',
+    steam: 'Steam',
+    gog: 'GOG.com',
+    gmg: 'GreenManGaming',
+    itch: 'Itch.io'
+  }
 };
 
+/**
+ * Shorthand for the window.scrollTo function
+ * @param $element
+ */
 function scrollToElement ($element) {
   window.scrollTo({top: $element.offsetTop, behavior: 'smooth'});
 }
 
+/**
+ * Show the loader element
+ * @param scrollTo Tell the app to scroll to the loader
+ */
 function showLoader (scrollTo) {
   window.app.loader.classList.toggle('visible');
   window.app.loader.classList.toggle('active');
@@ -32,6 +48,9 @@ function showLoader (scrollTo) {
   }
 }
 
+/**
+ * Hode the loader element
+ */
 function hideLoader () {
   window.app.loader.classList.toggle('active');
   window.setTimeout(function () {
@@ -39,35 +58,108 @@ function hideLoader () {
   }, 200);
 }
 
+/**
+ * Format a number to make it easier to read
+ * @param number
+ * @returns {*}
+ */
 function formatNumber (number) {
   return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'})
     .format(number);
 }
 
-function calculateEpicProfits () {
-  var totalSales = (window.app.price * window.app.expectedSales.epic).toFixed(2);
+/**
+ * Calculate the sales for a platform
+ * @param platform
+ * @param includeFunding
+ * @returns {{finalPrice: string, totalSales: string, platformProfit: string, profit: string, platformShare: string}}
+ */
+function calculateSales (platform, includeFunding = false) {
+  var totalSales = (window.app.price * window.app.expectedSales[platform]).toFixed(2);
 
-  var share = window.app.price / 100 * window.app.shares.epic;
+  var share = window.app.price / 100 * window.app.shares[platform];
   var finalPrice = (window.app.price - share).toFixed(2);
 
-  var epicShare = (window.app.price - finalPrice).toFixed(2);
-  var epicProfit = (window.app.expectedSales.epic * epicShare).toFixed(2);
+  var platformShare = (window.app.price - finalPrice).toFixed(2);
+  var platformProfit = (window.app.expectedSales[platform] * platformShare).toFixed(2);
 
-  var profit = window.app.expectedSales.epic * finalPrice;
-  profit += window.app.funding;
+  var profit = window.app.expectedSales[platform] * finalPrice;
+
+  if (includeFunding === true) {
+    profit += window.app.funding;
+  }
+
   profit = profit.toFixed(2);
 
-  var $epicResults = document.querySelector('.epic-results');
+  return {
+    totalSales: totalSales,
+    finalPrice: finalPrice,
+    platformShare: platformShare,
+    platformProfit: platformProfit,
+    profit: profit
+  };
+}
 
-  $epicResults.querySelector('.epic-sales-total').innerHTML = formatNumber(totalSales);
-  $epicResults.querySelector('.epic-single-profit').innerHTML = formatNumber(finalPrice);
-  $epicResults.querySelector('.epic-epic-share').innerHTML = formatNumber(epicShare);
-  $epicResults.querySelector('.epic-epic-profit').innerHTML = formatNumber(epicProfit);
-  $epicResults.querySelector('.epic-final-profit').innerHTML = formatNumber(profit);
+function displayPlatformResult (platform, results, displayBonusHint = false) {
+// Create a new platform profit from the template
+  var $allPlatformResults = document.querySelector('.platform-results');
+  var $resultTemplate = document.querySelector('.platform-result-template');
+  var $newPlatform = $resultTemplate.cloneNode(true);
 
-  $epicResults.style.display = 'block';
+  $newPlatform.querySelectorAll('.platform-name').forEach(function ($element) {
+    $element.innerHTML = window.app.platforms[platform];
+  });
+
+  $newPlatform.querySelector('.result-sales-total').innerHTML = formatNumber(results.totalSales);
+  $newPlatform.querySelector('.result-single-profit').innerHTML = formatNumber(results.finalPrice);
+  $newPlatform.querySelector('.result-platform-single-profit').innerHTML = formatNumber(results.platformShare);
+  $newPlatform.querySelector('.result-platform-total-profit').innerHTML = formatNumber(results.platformProfit);
+  $newPlatform.querySelector('.result-final-profit').innerHTML = formatNumber(results.profit);
+
+  if (displayBonusHint) {
+    $newPlatform.querySelector('.result-bonushint').style.display = 'block';
+  }
+
+  $newPlatform.className = 'result';
+
+  $allPlatformResults.appendChild($newPlatform);
+
+  return $newPlatform;
+}
+
+/**
+ * Calculate the values for the epic store
+ */
+function calculateEpicProfits () {
+  var results = calculateSales('epic', true);
+  var $epicResults = displayPlatformResult('epic', results, true);
+
+  document.querySelector('.platform-results').style.display = 'block';
 
   scrollToElement($epicResults);
+}
+
+/**
+ * Calculate the values for each additional platform
+ */
+function calculatePlatformProfits () {
+  for (var key in window.app.expectedSales) {
+    if (window.app.expectedSales.hasOwnProperty(key) && key !== 'epic') {
+
+      if (window.app.expectedSales[key] === 0) {
+        // Do not calculate unselected platforms
+        continue;
+      }
+
+      var results = calculateSales(key);
+
+      // Add the platform profit to the total profit
+      window.app.platformProfits += results.profit;
+
+      // Display the reults
+      var $platformResults = displayPlatformResult(key, results, true);
+    }
+  }
 }
 
 window.onload = function () {
@@ -175,10 +267,9 @@ window.onload = function () {
       calculateEpicProfits();
 
       // Calculate the profits for each selected platform
+      calculatePlatformProfits();
 
       // Calculate the difference between the profits
-
-      // Show all results to the user
 
     }, 2000);
 

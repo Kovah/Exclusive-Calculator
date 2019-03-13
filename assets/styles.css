@@ -335,15 +335,27 @@ button:active {
   padding: 4rem 0;
 }
 
-.results .line {
-  display: flex;
-  align-items: center;
-  margin: 0 0 1rem;
-  font-size: var(--font-size-xl);
+.result {
+  margin-bottom: 3rem;
 }
 
-.results .line span {
+.result .line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-lg);
+}
+
+.result .line span {
   margin-left: auto;
+}
+
+.result-bonushint {
+  display: none;
+}
+
+.platform-result-template {
+  display: none;
 }
 
 /*============= Media Queries =============*/
@@ -354,7 +366,7 @@ button:active {
   }
 
   .results .line {
-    margin: 0 0 .7rem;
+    margin-bottom: 1rem;
   }
 }
 
