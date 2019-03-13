@@ -6,8 +6,9 @@
   --gray-400: #ced4da;
   --gray-500: #adb5bd;
   --gray-600: #868e96;
+  --gray-650: #67737F;
   --gray-700: #495057;
-  --gray-740: #3e474f;
+  --gray-750: #3e474f;
   --gray-800: #343a40;
   --gray-850: #262b2f;
   --gray-900: #212529;
@@ -33,8 +34,11 @@
   --red-shadow: rgba(234, 87, 68, .4);
 
   --font-size: 1rem;
+  --font-size-sm: .8rem;
   --font-size-lg: 1.2rem;
   --font-size-xl: 1.6rem;
+
+  --text-muted: var(--gray-600);
 
   --border-radius: .2rem;
 }
@@ -77,14 +81,18 @@ body {
 }
 
 .header {
-  margin: 0 0 2rem;
+  margin-bottom: 3rem;
   text-align: center;
+}
+
+.intro {
+  margin-bottom: 3rem;
 }
 
 h1 {
   font-weight: 500;
   font-size: 2.5rem;
-  margin: 0;
+  margin: 1rem 0 0;
 }
 
 h2 {
@@ -95,7 +103,6 @@ h2 {
 
 .form {
   margin: 0 auto;
-  padding: 2rem 0;
   max-width: 100%;
 }
 
@@ -361,6 +368,28 @@ button:active {
 .platform-result-template {
   display: none;
 }
+
+
+/*============= Footer =============*/
+.footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--gray-850);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  color: var(--gray-700);
+}
+
+.footer a {
+  color: var(--gray-650);
+}
+
+.footer a:hover,
+.footer a:focus,
+.footer a:active {
+  color: var(--gray-600);
+}
+
 
 /*============= Media Queries =============*/
 @media screen and (min-width: 992px) {
