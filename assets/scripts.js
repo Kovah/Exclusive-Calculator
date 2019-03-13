@@ -21,7 +21,7 @@ window.app = {
 
 window.onload = function () {
   console.log('Epic Shit Calculator v0.1 initialized');
-  
+
   document.querySelector('.form').reset();
 
   var $numericInputs = document.querySelectorAll('[type=number]');
@@ -31,16 +31,17 @@ window.onload = function () {
   // Generic handler for numeric input fields
   $numericInputs.forEach(function ($input) {
     $input.addEventListener('keyup', function (event) {
-      var value = parseInt($input.value);
+      var value = $input.value;
       var option = $input.dataset.option;
-      var errorMessage = $input.closest('div').querySelector('.error-message');
 
-      if (value !== value) {
-        errorMessage.style.display = 'block';
-        return;
+      // Check if the input is valid
+      if (!$input.checkValidity()) {
+        // Reset the
+        value = 0;
+      } else {
+        // Try to parse the value as a number
+        value = parseInt(value);
       }
-
-      errorMessage.style.display = 'none';
 
       switch (option) {
         case 'epic-sales':

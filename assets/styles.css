@@ -131,6 +131,10 @@ h1 {
   box-shadow: 0 0 4px var(--red-shadow);
 }
 
+.form-input:invalid + .error-message {
+  display: block;
+}
+
 .form-input::placeholder {
   color: var(--gray-500);
   transition: color 100ms ease;
