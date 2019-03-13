@@ -45,26 +45,17 @@ function formatNumber (number) {
 }
 
 function calculateEpicProfits () {
-  console.log('Calculating Epic Profits');
-
   var totalSales = (window.app.price * window.app.expectedSales.epic).toFixed(2);
 
   var share = window.app.price / 100 * window.app.shares.epic;
   var finalPrice = (window.app.price - share).toFixed(2);
 
   var epicShare = (window.app.price - finalPrice).toFixed(2);
-
   var epicProfit = (window.app.expectedSales.epic * epicShare).toFixed(2);
 
   var profit = window.app.expectedSales.epic * finalPrice;
   profit += window.app.funding;
   profit = profit.toFixed(2);
-
-  console.log('- Sales Total: ' + totalSales + '$');
-  console.log('- Final Profit per Sale: ' + finalPrice + '$');
-  console.log('- Epic\'s Share: ' + epicShare + '$');
-  console.log('- Epic\'s Profit: ' + epicProfit + '$');
-  console.log('- Final profits: ' + profit + '$');
 
   var $epicResults = document.querySelector('.epic-results');
 
