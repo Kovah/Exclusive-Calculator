@@ -1,0 +1,255 @@
+:root {
+  --white: #fff;
+  --gray-100: #ebebeb;
+  --gray-200: #4e5d6c;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #868e96;
+  --gray-700: #495057;
+  --gray-740: #3e474f;
+  --gray-800: #343a40;
+  --gray-850: #262b2f;
+  --gray-900: #212529;
+  --gray-950: #141c23;
+  --gray-1000: #0d1620;
+  --black: #000;
+
+  --blue: #375a7f;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #e74c3c;
+  --orange: #fd7e14;
+  --yellow: #f39c12;
+  --green: #00bc8c;
+  --teal: #20c997;
+  --cyan: #3498db;
+
+  --green-dark: #00936e;
+  --green-darker: #007356;
+  --green-shadow: rgba(0, 196, 151, .4);
+  --green-shadow-light: rgba(0, 196, 151, .6);
+  --red-shadow: rgba(234, 87, 68, .4);
+
+  --font-size: 1rem;
+  --font-size-lg: 1.2rem;
+
+  --border-radius: .2rem;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: var(--font-size);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--white);
+  background: url('bg.jpg') center center fixed no-repeat var(--gray-900);
+  background-size: cover;
+}
+
+/*============= Base layout & styles =============*/
+.contianer {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 992px;
+}
+
+.box {
+  width: 100%;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  background: var(--gray-900);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+}
+
+.header {
+  margin: 0 0 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.form {
+  margin: 0 auto;
+  padding: 2rem 0;
+  max-width: 100%;
+}
+
+.game-information {
+  margin-bottom: 4rem;
+}
+
+/*============= Input fields =============*/
+.input-group {
+  margin: 0 auto 2rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 500;
+}
+
+.form-input {
+  appearance: none;
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius);
+  background: var(--gray-850);
+  border: 2px solid var(--gray-950);
+  font-size: var(--font-size-lg);
+  padding: .7rem 1rem;
+  color: var(--white);
+}
+
+.form-input:focus {
+  border-color: var(--green);
+  outline: none;
+  box-shadow: 0 0 4px var(--green-shadow);
+}
+
+.form-input:invalid {
+  border-color: var(--red);
+  outline: none;
+  box-shadow: 0 0 4px var(--red-shadow);
+}
+
+.form-input::placeholder {
+  color: var(--gray-500);
+  transition: color 100ms ease;
+}
+
+.form-input:disabled {
+  cursor: not-allowed;
+  color: var(--gray-700);
+}
+
+.form-input:disabled::placeholder {
+  color: var(--gray-700);
+  transition: color 100ms ease;
+}
+
+.error-message {
+  display: none;
+  margin: .25rem 0 0;
+  color: var(--red);
+}
+
+
+/*============= Button =============*/
+button {
+  appearance: none;
+  background-color: var(--green);
+  border-radius: var(--border-radius);
+  border: 0;
+  padding: .7rem 1rem;
+  font-size: var(--font-size-lg);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 100ms ease, transform 100ms ease;
+}
+
+button:hover,
+button:focus {
+  background-color: var(--green-dark);
+  transition: background-color 100ms ease;
+}
+
+button:active {
+  background-color: var(--green-darker);
+  transition: background-color 100ms ease, transform 100ms ease;
+  transform: scale(.975);
+}
+
+/*============= Platform select =============*/
+.platform-select {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 auto 2rem;
+  max-width: 100%;
+}
+
+.platform-select .checkbox {
+  position: absolute;
+  left: -9999px;
+}
+
+.platform-select label {
+  position: relative;
+  display: inline;
+  margin-right: 1rem;
+  padding-left: 3rem;
+  cursor: pointer;
+  align-self: center;
+  font-size: var(--font-size-lg);
+}
+
+.platform-select label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: .2rem;
+  background: var(--gray-850);
+  border: 2px solid var(--gray-950);
+}
+
+.platform-select .checkbox:checked + label::after {
+  opacity: 1;
+  transition: opacity 100ms ease;
+}
+
+.platform-select label::after {
+  content: '';
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  opacity: 0;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+  border: 2px solid var(--green);
+  box-shadow: 0 0 3px var(--green-shadow);
+  transition: opacity 100ms ease;
+}
+
+.platform-select label small {
+  display: block;
+  font-size: .8rem;
+  color: var(--gray-500);
+}
+
+.platform-select .platform-sales-input {
+  flex: 1;
+  max-width: 50%;
+  margin-left: auto;
+}
+
+/*============= Media Queries =============*/
+@media screen and (min-width: 992px) {
+
+  .form {
+    max-width: 80%;
+  }
+}
