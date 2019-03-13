@@ -207,6 +207,10 @@ button:active {
   transform: scale(.975);
 }
 
+.calculate {
+  margin: 2rem 0;
+}
+
 /*============= Platform select =============*/
 .platform-select {
   display: flex;
