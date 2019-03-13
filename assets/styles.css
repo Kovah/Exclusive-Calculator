@@ -96,6 +96,11 @@ h1 {
   margin-bottom: 4rem;
 }
 
+.form-errors {
+  margin-bottom: 2rem;
+}
+
+
 /*============= Input fields =============*/
 .input-group {
   margin: 0 auto 2rem;
@@ -241,7 +246,7 @@ button:active {
 .platform-select label small {
   display: block;
   font-size: .8rem;
-  color: var(--gray-500);
+  color: var(--gray-600);
 }
 
 .platform-select .platform-sales-input {
@@ -250,10 +255,76 @@ button:active {
   margin-left: auto;
 }
 
+/*============= Results =============*/
+.loader {
+  display: none;
+  padding: 4rem 0;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.loader.visible {
+  display: block;
+}
+
+.loader.active {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.loading {
+  text-align: center;
+}
+
+.loading-element {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 1rem;
+  border-radius: 100%;
+  animation: loading 1s ease-in-out infinite;
+}
+
+.loading-element:nth-child(1) {
+  background-color: var(--green);
+  animation-delay: 0;
+}
+
+.loading-element:nth-child(2) {
+  background-color: var(--cyan);
+  animation-delay: 0.09s;
+}
+
+.loading-element:nth-child(3) {
+  background-color: var(--green);
+  animation-delay: .18s;
+}
+
+.loading-element:nth-child(4) {
+  background-color: var(--cyan);
+  animation-delay: .27s;
+}
+
+.results {
+
+}
+
 /*============= Media Queries =============*/
 @media screen and (min-width: 992px) {
 
   .form {
     max-width: 80%;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+  40% {
+    transform: scale(1);
   }
 }

@@ -85,6 +85,57 @@ window.onload = function () {
 
   $calcButton.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(window.app); //@DEBUG
+    // Reset all error messages
+    document.querySelectorAll('.form-errors p').forEach(function ($message) {
+      $message.style.display = 'none';
+    });
+
+    var totalSales = 0;
+    for (var key in window.app.expectedSales) {
+      if (window.app.expectedSales.hasOwnProperty(key)) {
+        totalSales += window.app.expectedSales[key];
+      }
+    }
+
+    if (window.app.expectedSales.epic === 0) {
+      document.querySelector('.error-no-sales').style.display = 'block';
+      return;
+    }
+
+    if (window.app.price === 0) {
+      document.querySelector('.error-no-price').style.display = 'block';
+      return;
+    }
+
+    if (totalSales <= window.app.expectedSales.epic) {
+      document.querySelector('.error-no-platform').style.display = 'block';
+      return;
+    }
+
+    // All set, let's calculate!
+    // First, activate the loader
+    var $loader = document.querySelector('.loader');
+    $loader.classList.toggle('visible');
+    $loader.classList.toggle('active');
+
+    window.setTimeout(function () {
+      // Remove the loader
+      $loader.classList.toggle('active');
+      window.setTimeout(function(){
+        $loader.classList.toggle('visible');
+      }, 200);
+
+      // Calculate the total profit expected from the epic store
+
+      // Calculate the profits for each selected platform
+
+      // Calculate the difference between the profits
+
+      // Show all results to the user
+
+    }, 2000);
+
+
+
   });
 };
