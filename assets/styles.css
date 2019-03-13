@@ -100,6 +100,19 @@ h1 {
   margin-bottom: 2rem;
 }
 
+.text-green {
+  color: var(--green);
+}
+
+.text-red {
+  color: var(--red);
+}
+
+.monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 95%;
+}
+
 
 /*============= Input fields =============*/
 .input-group {
