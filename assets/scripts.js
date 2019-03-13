@@ -116,7 +116,7 @@ function displayPlatformResult (platform, results, displayBonusHint = false) {
   $newPlatform.querySelector('.result-platform-total-profit').innerHTML = formatNumber(results.platformProfit);
   $newPlatform.querySelector('.result-final-profit').innerHTML = formatNumber(results.profit);
 
-  if (displayBonusHint) {
+  if (displayBonusHint === true) {
     $newPlatform.querySelector('.result-bonushint').style.display = 'block';
   }
 
@@ -157,7 +157,7 @@ function calculatePlatformProfits () {
       window.app.platformProfits += results.profit;
 
       // Display the reults
-      var $platformResults = displayPlatformResult(key, results, true);
+      displayPlatformResult(key, results);
     }
   }
 }
