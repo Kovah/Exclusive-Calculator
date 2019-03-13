@@ -63,6 +63,8 @@ window.onload = function () {
     var $checkbox = $select.querySelector('.checkbox');
     var $salesInput = $select.querySelector('.form-input');
 
+    $salesInput.disabled = true;
+
     // Listen to checkbox clicks
     $checkbox.addEventListener('change', function () {
       var isDisabled = !$checkbox.checked;
