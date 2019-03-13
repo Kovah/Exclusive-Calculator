@@ -102,8 +102,12 @@ h2 {
 }
 
 .form {
-  margin: 0 auto;
+  margin: 4rem auto 0;
   max-width: 100%;
+}
+
+.results-wrapper {
+  margin: 4rem 0 0;
 }
 
 .game-information {
@@ -215,7 +219,7 @@ button:active {
 }
 
 .calculate {
-  margin: 2rem 0;
+  margin-top: 2rem;
 }
 
 /*============= Platform select =============*/
@@ -343,11 +347,10 @@ button:active {
 /*============= Results =============*/
 .results {
   display: none;
-  padding: 4rem 0;
 }
 
-.result {
-  margin-bottom: 3rem;
+.result + .result {
+  margin-top: 3rem;
 }
 
 .result .line {
