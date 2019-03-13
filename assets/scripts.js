@@ -38,6 +38,47 @@ function hideLoader () {
     window.app.loader.classList.toggle('visible');
   }, 200);
 }
+
+function formatNumber (number) {
+  return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'})
+    .format(number);
+}
+
+function calculateEpicProfits () {
+  console.log('Calculating Epic Profits');
+
+  var totalSales = (window.app.price * window.app.expectedSales.epic).toFixed(2);
+
+  var share = window.app.price / 100 * window.app.shares.epic;
+  var finalPrice = (window.app.price - share).toFixed(2);
+
+  var epicShare = (window.app.price - finalPrice).toFixed(2);
+
+  var epicProfit = (window.app.expectedSales.epic * epicShare).toFixed(2);
+
+  var profit = window.app.expectedSales.epic * finalPrice;
+  profit += window.app.funding;
+  profit = profit.toFixed(2);
+
+  console.log('- Sales Total: ' + totalSales + '$');
+  console.log('- Final Profit per Sale: ' + finalPrice + '$');
+  console.log('- Epic\'s Share: ' + epicShare + '$');
+  console.log('- Epic\'s Profit: ' + epicProfit + '$');
+  console.log('- Final profits: ' + profit + '$');
+
+  var $epicResults = document.querySelector('.epic-results');
+
+  $epicResults.querySelector('.epic-sales-total').innerHTML = formatNumber(totalSales);
+  $epicResults.querySelector('.epic-single-profit').innerHTML = formatNumber(finalPrice);
+  $epicResults.querySelector('.epic-epic-share').innerHTML = formatNumber(epicShare);
+  $epicResults.querySelector('.epic-epic-profit').innerHTML = formatNumber(epicProfit);
+  $epicResults.querySelector('.epic-final-profit').innerHTML = formatNumber(profit);
+
+  $epicResults.style.display = 'block';
+
+  scrollToElement($epicResults);
+}
+
 window.onload = function () {
   console.log('Epic Shit Calculator v0.1 initialized');
 
@@ -140,6 +181,7 @@ window.onload = function () {
       hideLoader();
 
       // Calculate the total profit expected from the epic store
+      calculateEpicProfits();
 
       // Calculate the profits for each selected platform
 
@@ -148,8 +190,6 @@ window.onload = function () {
       // Show all results to the user
 
     }, 2000);
-
-
 
   });
 };

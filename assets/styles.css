@@ -34,6 +34,7 @@
 
   --font-size: 1rem;
   --font-size-lg: 1.2rem;
+  --font-size-xl: 1.6rem;
 
   --border-radius: .2rem;
 }
@@ -84,6 +85,12 @@ h1 {
   font-weight: 500;
   font-size: 2.5rem;
   margin: 0;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 2rem;
+  margin: 0 0 1rem;
 }
 
 .form {
@@ -272,7 +279,7 @@ button:active {
   margin-left: auto;
 }
 
-/*============= Results =============*/
+/*============= Loader =============*/
 .loader {
   display: none;
   padding: 4rem 0;
@@ -322,8 +329,21 @@ button:active {
   animation-delay: .27s;
 }
 
+/*============= Results =============*/
 .results {
+  display: none;
+  padding: 4rem 0;
+}
 
+.results .line {
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem;
+  font-size: var(--font-size-xl);
+}
+
+.results .line span {
+  margin-left: auto;
 }
 
 /*============= Media Queries =============*/
@@ -331,6 +351,10 @@ button:active {
 
   .form {
     max-width: 80%;
+  }
+
+  .results .line {
+    margin: 0 0 .7rem;
   }
 }
 
