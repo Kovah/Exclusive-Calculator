@@ -237,6 +237,10 @@ button:active {
   border: 2px solid var(--gray-950);
 }
 
+.platform-select .checkbox:focus + label::before {
+  box-shadow: 0 0 3px var(--green-shadow);
+}
+
 .platform-select .checkbox:checked + label::after {
   opacity: 1;
   transition: opacity 100ms ease;
