@@ -19,10 +19,30 @@ window.app = {
   funding: 0
 };
 
+function scrollToElement ($element) {
+  window.scrollTo({top: $element.offsetTop, behavior: 'smooth'});
+}
+
+function showLoader (scrollTo) {
+  window.app.loader.classList.toggle('visible');
+  window.app.loader.classList.toggle('active');
+
+  if (scrollTo === true) {
+    scrollToElement(window.app.loader);
+  }
+}
+
+function hideLoader () {
+  window.app.loader.classList.toggle('active');
+  window.setTimeout(function () {
+    window.app.loader.classList.toggle('visible');
+  }, 200);
+}
 window.onload = function () {
   console.log('Epic Shit Calculator v0.1 initialized');
 
   document.querySelector('.form').reset();
+  window.app.loader = document.querySelector('.loader');
 
   var $numericInputs = document.querySelectorAll('[type=number]');
   var $platformSelects = document.querySelectorAll('.platform-select');
@@ -114,16 +134,10 @@ window.onload = function () {
 
     // All set, let's calculate!
     // First, activate the loader
-    var $loader = document.querySelector('.loader');
-    $loader.classList.toggle('visible');
-    $loader.classList.toggle('active');
+    showLoader(true);
 
     window.setTimeout(function () {
-      // Remove the loader
-      $loader.classList.toggle('active');
-      window.setTimeout(function(){
-        $loader.classList.toggle('visible');
-      }, 200);
+      hideLoader();
 
       // Calculate the total profit expected from the epic store
 
