@@ -234,6 +234,12 @@ window.onload = function () {
   window.el.$platformResults = document.querySelector('.platform-results');
   window.el.$totalResults = document.querySelector('.total-results');
 
+  if (window.el.$form === null) {
+    // Bail out, that's the about page, but enable the cookie banner
+    handleCookiebanner();
+    return;
+  }
+
   // Reset the form
   window.el.$form.reset();
 

@@ -107,6 +107,31 @@ h3 {
   margin: 0 0 1rem;
 }
 
+ol li,
+ul li {
+  margin-bottom: .7rem;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+b, strong {
+  font-weight: 500;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: var(--green-dark);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+}
+
 .form {
   margin: 4rem auto 0;
   max-width: 100%;
@@ -517,6 +542,19 @@ button.secondary:active {
 
 .cookie-buttons {
   margin-left: auto;
+}
+
+
+/*============= About page =============*/
+.about h2,
+.about h3 {
+  margin-top: 3rem;
+}
+
+.about p,
+.about ul,
+.about ol {
+  margin: 0 0 2rem;
 }
 
 

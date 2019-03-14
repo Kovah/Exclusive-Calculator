@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Epic Exclusive Calculator</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="contianer">
+  <div class="box">
+
+    <div class="header">
+      <h1>Platform Exclusive Calculator</h1>
+    </div>
+
+    <div class="about">
+      <p>
+        <a href="index.html">&leftarrow; Back to the Calculator</a>
+      </p>
+      <p>
+        With this calculator a publisher / developer can find out if he should release his game as an exclusive for only one publishing platform or not.
+      </p>
+
+      <h2>The economic explanation</h2>
+
+      <p>
+        The idea behind this calculator is based on basic economics.
+      </p>
+
+      <ul>
+        <li>We want to sell our product for $50 each.</li>
+        <li>We expect to sell 100,000 units by using service A.</li>
+        <li>We use a service A that takes a share of 10%.</li>
+        <li>Service A offers us a one-time payment of $100,000 to use the service exclusively.</li>
+        <li>Another service B takes a share of 30%.</li>
+        <li>We earn $45 with each sale via service A.</li>
+        <li>We earn $35 with each sale via service B.</li>
+        <li>This means: <b>even if service B takes a higher share, we still earn money with every sale</b>!</li>
+      </ul>
+
+      <p>The crucial point her is: once service B generated enough sales to top the bonus payment, we lose money. Let's continue our calculation:</p>
+
+      <ul>
+        <li>How many sales via service B do we need to top the bonus payment?</li>
+        <li>Simple: divide the bonus payment by the profit for each service B sale.</li>
+        <li class="monospace">$100,000 / $35 = 2857.14</li>
+        <li>If we round up, we have a total of 2858 sales.</li>
+        <li>This means that if service B just generates as little as 3000 sales (which is like peanuts for expected sales of 100,000 units), it would have been better to publish on both services.
+        </li>
+        <li>After reaching 2858 sales via service B, we could earn additional $35 with every sale. Pretty dumb to say no, heh?
+        </li>
+      </ul>
+
+      <p>
+        In <b>some cases</b> it <b>may</b> make sense to publish exclusively via one service. But in all other cases this decision is comparable to this:
+      </p>
+
+      <p><img src="assets/moneywaste.jpg" alt="waste of money"></p>
+
+      <h2>How the calculator works</h2>
+      <p>This is a detailed</p>
+      <ul>
+        <li>The user selects the platform he want's to exclusively publish to, and enters the expected sales, the base price for the game and - if applicable - a bonus payment for the exclusive publishing deal.
+        </li>
+        <li>Additionally the user selects at least one other publishing platform.</li>
+        <li>
+          Calculations for each platform:
+          <ul>
+            <li class="monospace">Total sales = expected sales * price</li>
+            <li class="monospace">Platform share = price / 100 * share of the platform</li>
+            <li class="monospace">Total platform profit = expected sales * platform share</li>
+            <li class="monospace">Publisher profit per sale = price - platform share</li>
+            <li class="monospace">Publisher profit total = expected sales * Publisher profit per sale</li>
+          </ul>
+        </li>
+        <li>
+          If applicable, the bonus payment is added to the total publisher profit.
+        </li>
+        <li>
+          The result is calculated by subtracting the cummulated profits for all platforms from the exclusive platform profit.
+        </li>
+        <li>
+          The result is a positive value if the exclusive platform generates a larger profit than all platforms together.
+        </li>
+        <li>
+          The result is a negative value if the exclusive platform generates a less profit than all platforms together.
+        </li>
+      </ul>
+
+      <h2>Ideas? Feedback? Found a bug?</h2>
+      <p>
+        Feel free to contact me via <a href="https://twitter.com/kovah_kvh">Twitter</a> or <a href="https://www.reddit.com/user/theKovah">Reddit</a>.
+      </p>
+      <p>
+        Developers may directly visit the <a href="https://github.com/Kovah/Exclusive-Calculator">Github repository</a> and file an issue. (Yes, this calculator is open source!)
+      </p>
+    </div>
+
+    <div class="footer">
+      The Exclusive Generator is a project by <a href="https://kovah.de">Kovah.de</a> | All Rights belong to their respective owners.
+    </div>
+
+  </div>
+
+  <div class="cookieconsent">
+    <div class="cookie-disclaimer">
+      This site uses cookies. Do not track is valued.
+    </div>
+    <div class="cookie-buttons">
+      <button type="button" class="cookie-action small secondary" data-action="decline">Decline</button>
+      <button type="button" class="cookie-action small" data-action="accept">Accept</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/scripts.js"></script>
+
+<!-- Matomo -->
+<script type="text/javascript">
+  var _paq = window._paq || [];
+  _paq.push(['setDoNotTrack', true]);
+  _paq.push(['requireConsent']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function () {
+    var u = '//analytics.kovah.de/';
+    _paq.push(['setTrackerUrl', u + 'matomo.php']);
+    _paq.push(['setSiteId', '25']);
+    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+    g.type = 'text/javascript';
+    g.async = true;
+    g.defer = true;
+    g.src = u + 'matomo.js';
+    s.parentNode.insertBefore(g, s);
+  })();
+</script>
+<noscript><p><img src="//analytics.kovah.de/matomo.php?idsite=25&amp;rec=1" style="border:0;" alt=""/></p></noscript>
+<!-- End Matomo Code -->
+
+</body>
+</html>
