@@ -32,7 +32,7 @@
 
         <div class="input-group">
           <label for="main-platform">Choose your exclusive Platform</label>
-          <select id="main-platform" class="form-input">
+          <select id="main-platform" class="form-input" required>
             <option value="epic">Epic Store</option>
             <option value="steam">Steam</option>
             <option value="gog">GOG.com</option>
@@ -43,14 +43,14 @@
 
         <div class="input-group">
           <label for="expected-sales">Expected Sales</label>
-          <input type="number" id="expected-sales" class="form-input" placeholder="e.g. 150000" min="1"
+          <input type="number" id="expected-sales" class="form-input" placeholder="e.g. 150000" min="1" required
               data-option="epic-sales">
           <p class="error-message">Please enter a numeric value</p>
         </div>
 
         <div class="input-group">
           <label for="price">Price in $</label>
-          <input type="number" id="price" class="form-input" placeholder="e.g. 39.99" min="1" step="0.01"
+          <input type="number" id="price" class="form-input" placeholder="e.g. 39.99" min="1" step="0.01" required
               data-option="price">
           <p class="error-message">Please enter a numeric value</p>
         </div>
@@ -64,10 +64,10 @@
 
       </div>
 
-      <div class="platform-selects">
+      <div class="platform-details">
         <h3>Additional platforms</h3>
 
-        <div class="platform-select" data-share="12" data-platform="epic">
+        <div class="platform-detail" data-platform="epic">
           <input type="checkbox" id="platform-epic" class="checkbox">
           <label for="platform-epic">
             Epic Store
@@ -75,12 +75,12 @@
           </label>
 
           <div class="platform-sales-input">
-            <input type="number" class="form-input" placeholder="Expected Sales on Epic Store" min="0" disabled>
+            <input type="number" class="form-input" placeholder="Expected Sales on Epic Store" min="0" disabled required>
             <p class="error-message">Please enter a numeric value</p>
           </div>
         </div>
 
-        <div class="platform-select" data-share="30" data-platform="steam">
+        <div class="platform-detail" data-platform="steam">
           <input type="checkbox" id="platform-steam" class="checkbox">
           <label for="platform-steam">
             Steam
@@ -88,12 +88,12 @@
           </label>
 
           <div class="platform-sales-input">
-            <input type="number" class="form-input" placeholder="Expected Sales on Steam" min="0" disabled>
+            <input type="number" class="form-input" placeholder="Expected Sales on Steam" min="0" disabled required>
             <p class="error-message">Please enter a numeric value</p>
           </div>
         </div>
 
-        <div class="platform-select" data-share="30" data-platform="gog">
+        <div class="platform-detail" data-platform="gog">
           <input type="checkbox" id="platform-gog" class="checkbox">
           <label for="platform-gog">
             GOG.com
@@ -101,12 +101,12 @@
           </label>
 
           <div class="platform-sales-input">
-            <input type="number" class="form-input" placeholder="Expected Sales on GOG" min="0" disabled>
+            <input type="number" class="form-input" placeholder="Expected Sales on GOG" min="0" disabled required>
             <p class="error-message">Please enter a numeric value</p>
           </div>
         </div>
 
-        <div class="platform-select" data-share="30" data-platform="gmg">
+        <div class="platform-detail" data-platform="gmg">
           <input type="checkbox" id="platform-gmg" class="checkbox">
           <label for="platform-gmg">
             Green Man Gaming
@@ -114,12 +114,12 @@
           </label>
 
           <div class="platform-sales-input">
-            <input type="number" class="form-input" placeholder="Expected Sales on GMG" min="0" disabled>
+            <input type="number" class="form-input" placeholder="Expected Sales on GMG" min="0" disabled required>
             <p class="error-message">Please enter a numeric value</p>
           </div>
         </div>
 
-        <div class="platform-select" data-share="10" data-platform="itch">
+        <div class="platform-detail" data-platform="itch">
           <input type="checkbox" id="platform-humble" class="checkbox">
           <label for="platform-humble">
             Itch.io
@@ -127,19 +127,17 @@
           </label>
 
           <div class="platform-sales-input">
-            <input type="number" class="form-input" placeholder="Expected Sales on Itch" min="0" disabled>
+            <input type="number" class="form-input" placeholder="Expected Sales on Itch" min="0" disabled required>
             <p class="error-message">Please enter a numeric value</p>
           </div>
         </div>
       </div>
 
       <div class="form-errors">
-        <p class="error-message error-no-sales">Please enter an amount for the expected sales.</p>
-        <p class="error-message error-no-price">Please enter a price higher than 0.</p>
         <p class="error-message error-no-platform">Please select at least one other platform to compare to.</p>
       </div>
 
-      <button type="button" class="calculate">
+      <button type="submit" class="calculate">
         Calculate now
       </button>
 

@@ -1,5 +1,6 @@
 'use strict';
 
+window.el = {};
 window.app = {
   expectedSales: {
     epic: 0,
@@ -18,6 +19,7 @@ window.app = {
   price: 0,
   funding: 0,
   platformProfits: 0,
+  mainPlatform: '',
   platforms: {
     epic: 'Epic Store',
     steam: 'Steam',
@@ -40,11 +42,11 @@ function scrollToElement ($element) {
  * @param scrollTo Tell the app to scroll to the loader
  */
 function showLoader (scrollTo) {
-  window.app.loader.classList.toggle('visible');
-  window.app.loader.classList.toggle('active');
+  window.el.$loader.classList.toggle('visible');
+  window.el.$loader.classList.toggle('active');
 
   if (scrollTo === true) {
-    scrollToElement(window.app.loader);
+    scrollToElement(window.el.$loader);
   }
 }
 
@@ -52,9 +54,9 @@ function showLoader (scrollTo) {
  * Hode the loader element
  */
 function hideLoader () {
-  window.app.loader.classList.toggle('active');
+  window.el.$loader.classList.toggle('active');
   window.setTimeout(function () {
-    window.app.loader.classList.toggle('visible');
+    window.el.$loader.classList.toggle('visible');
   }, 200);
 }
 
@@ -130,36 +132,39 @@ function displayPlatformResult (platform, results, displayBonusHint = false) {
 /**
  * Calculate the values for the epic store
  */
-function calculateEpicProfits () {
-  var results = calculateSales('epic', true);
-  var $epicResults = displayPlatformResult('epic', results, true);
+function calculatePrimaryPlatformResults () {
+  var platform = window.app.mainPlatform;
+
+  var results = calculateSales(platform, true);
+  var $primaryResults = displayPlatformResult(platform, results, true);
 
   document.querySelector('.platform-results').style.display = 'block';
 
-  scrollToElement($epicResults);
+  scrollToElement($primaryResults);
 }
 
 /**
  * Calculate the values for each additional platform
  */
-function calculatePlatformProfits () {
-  for (var key in window.app.expectedSales) {
-    if (window.app.expectedSales.hasOwnProperty(key) && key !== 'epic') {
+function calculateAdditionalPlatformResults () {
+  window.el.$platformDetails.forEach(function ($details) {
+    var platform = $details.dataset.platform;
 
-      if (window.app.expectedSales[key] === 0) {
-        // Do not calculate unselected platforms
-        continue;
+    // Check if the platform is not the primary platform
+    if (platform !== window.app.mainPlatform) {
+
+      // Calculate the results only if the
+      if ($details.querySelector('.checkbox').checked) {
+        var results = calculateSales(platform, false);
+
+        // Add the platform profit to the total profit
+        window.app.platformProfits += results.profit;
+
+        // Display the reults
+        displayPlatformResult(platform, results);
       }
-
-      var results = calculateSales(key);
-
-      // Add the platform profit to the total profit
-      window.app.platformProfits += results.profit;
-
-      // Display the reults
-      displayPlatformResult(key, results);
     }
-  }
+  });
 }
 
 /**
@@ -167,8 +172,10 @@ function calculatePlatformProfits () {
  * @param platform
  */
 function setMainPlatform (platform) {
-  var $platformSelects = document.querySelectorAll('.platform-select');
-  var $mainPlatformDetail = document.querySelector('.platform-select[data-platform=' + platform + ']');
+  window.app.mainPlatform = platform;
+
+  var $platformSelects = document.querySelectorAll('.platform-detail');
+  var $mainPlatformDetail = document.querySelector('.platform-detail[data-platform=' + platform + ']');
 
   // Enable all selects
   $platformSelects.forEach(function ($select) {
@@ -183,13 +190,16 @@ function setMainPlatform (platform) {
 window.onload = function () {
   console.log('Epic Shit Calculator v0.1 initialized');
 
-  document.querySelector('.form').reset();
-  window.app.loader = document.querySelector('.loader');
-
-  var $numericInputs = document.querySelectorAll('[type=number]');
+  // Set global elements
+  window.el.$loader = document.querySelector('.loader');
+  window.el.$form = document.querySelector('.form');
+  window.el.$platformDetails = document.querySelectorAll('.platform-detail');
+  window.el.$platformResults = document.querySelector('.platform-results');
+  window.el.$totalResults = document.querySelector('.total-results');
   var $mainPlatformSelect = document.querySelector('#main-platform');
-  var $platformSelects = document.querySelectorAll('.platform-select');
-  var $calcButton = document.querySelector('.calculate');
+
+  // Reset the form
+  window.el.$form.reset();
 
   // Add handler for changing the main platform
   $mainPlatformSelect.addEventListener('change', function () {
@@ -202,106 +212,77 @@ window.onload = function () {
   // Set the initial option
   setMainPlatform($mainPlatformSelect.options[0].value);
 
-  // Generic handler for numeric input fields
-  $numericInputs.forEach(function ($input) {
-    $input.addEventListener('keyup', function (event) {
-      var value = $input.value;
-      var option = $input.dataset.option;
-
-      // Check if the input is valid
-      if (!$input.checkValidity()) {
-        // Reset the
-        value = 0;
-      } else {
-        // Try to parse the value as a number
-        value = parseInt(value);
-      }
-
-      switch (option) {
-        case 'epic-sales':
-          window.app.expectedSales.epic = value;
-          break;
-        case 'price':
-          window.app.price = value;
-          break;
-        case 'funding':
-          window.app.funding = value;
-          break;
-      }
-    });
-  });
-
   // Handle platform selects
-  $platformSelects.forEach(function ($select) {
-    var platform = $select.dataset.platform;
-    var $checkbox = $select.querySelector('.checkbox');
-    var $salesInput = $select.querySelector('.form-input');
+  window.el.$platformDetails.forEach(function ($details) {
+    var $checkbox = $details.querySelector('.checkbox');
+    var $salesInput = $details.querySelector('.form-input');
 
     $salesInput.disabled = true;
 
     // Listen to checkbox clicks
     $checkbox.addEventListener('change', function () {
-      var isDisabled = !$checkbox.checked;
-      $salesInput.disabled = isDisabled;
-
-      if (isDisabled) {
-        window.app.expectedSales[platform] = 0;
-      } else {
-        window.app.expectedSales[platform] = parseInt($salesInput.value);
-      }
-    });
-
-    // Save expected sales on input change
-    $salesInput.addEventListener('keyup', function () {
-      window.app.expectedSales[platform] = parseInt($salesInput.value);
+      $salesInput.disabled = !$checkbox.checked;
     });
   });
 
-  $calcButton.addEventListener('click', function (e) {
+  // Handle the form submit
+  window.el.$form.addEventListener('submit', function (e) {
     e.preventDefault();
-    // Reset all error messages
+
+    // Reset all error mesages
     document.querySelectorAll('.form-errors p').forEach(function ($message) {
       $message.style.display = 'none';
     });
 
-    var totalSales = 0;
-    for (var key in window.app.expectedSales) {
-      if (window.app.expectedSales.hasOwnProperty(key)) {
-        totalSales += window.app.expectedSales[key];
-      }
-    }
+    // Empty the existing results / hide total results
+    window.el.$platformResults.innerHTML = '';
+    window.el.$totalResults.style.display = 'none';
 
-    if (window.app.expectedSales.epic === 0) {
-      document.querySelector('.error-no-sales').style.display = 'block';
-      return;
-    }
-
-    if (window.app.price === 0) {
-      document.querySelector('.error-no-price').style.display = 'block';
-      return;
-    }
-
-    if (totalSales <= window.app.expectedSales.epic) {
+    // Check if at least one additional platform was selected
+    var $activeAdditionalPlatforms = document.querySelector('.platform-detail .checkbox:checked');
+    if ($activeAdditionalPlatforms === null) {
       document.querySelector('.error-no-platform').style.display = 'block';
       return;
     }
 
-    // All set, let's calculate!
-    // First, activate the loader
+    // Collect all values for the main platform
+    var mainPlatform = window.app.mainPlatform;
+    var mainExpectedSales = document.querySelector('#expected-sales').value;
+    var price = document.querySelector('#price').value;
+    var funding = document.querySelector('#funding').value;
+
+    window.app.expectedSales[mainPlatform] = parseInt(mainExpectedSales);
+    window.app.price = parseInt(price);
+    window.app.funding = parseInt(funding);
+
+    // Collect expected sales for additional platforms
+    window.el.$platformDetails.forEach(function ($details) {
+      var platform = $details.dataset.platform;
+
+      if (
+        platform !== window.app.mainPlatform
+        && $details.querySelector('.checkbox').checked
+      ) {
+        var expectedSales = $details.querySelector('.form-input').value;
+        window.app.expectedSales[platform] = parseInt(expectedSales);
+      }
+    });
+
+    // Run the calculation and show the results
     showLoader(true);
 
     window.setTimeout(function () {
       hideLoader();
 
       // Calculate the total profit expected from the epic store
-      calculateEpicProfits();
+      calculatePrimaryPlatformResults();
 
       // Calculate the profits for each selected platform
-      calculatePlatformProfits();
+      calculateAdditionalPlatformResults();
 
       // Calculate the difference between the profits
+      // @TODO
 
     }, 2000);
-
   });
 };

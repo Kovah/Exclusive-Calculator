@@ -166,13 +166,13 @@ h3 {
   box-shadow: 0 0 4px var(--green-shadow);
 }
 
-.form-input:invalid {
+.form-input:invalid:not(:empty) {
   border-color: var(--red);
   outline: none;
   box-shadow: 0 0 4px var(--red-shadow);
 }
 
-.form-input:invalid + .error-message {
+.form-input:invalid:not(:empty) + .error-message {
   display: block;
 }
 
@@ -229,7 +229,7 @@ button:active {
 }
 
 /*============= Platform select =============*/
-.platform-select {
+.platform-detail {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -237,12 +237,12 @@ button:active {
   max-width: 100%;
 }
 
-.platform-select .checkbox {
+.platform-detail .checkbox {
   position: absolute;
   left: -9999px;
 }
 
-.platform-select label {
+.platform-detail label {
   position: relative;
   display: inline;
   margin-right: 1rem;
@@ -252,7 +252,7 @@ button:active {
   font-size: var(--font-size-lg);
 }
 
-.platform-select label::before {
+.platform-detail label::before {
   content: '';
   position: absolute;
   top: 0;
@@ -265,20 +265,20 @@ button:active {
   border: 2px solid var(--gray-950);
 }
 
-.platform-select .checkbox:focus + label::before {
+.platform-detail .checkbox:focus + label::before {
   box-shadow: 0 0 3px var(--green-shadow);
 }
 
-.platform-select .checkbox:disabled + label {
+.platform-detail .checkbox:disabled + label {
   cursor: not-allowed;
   color: var(--text-muted);
 }
 
-.platform-select .checkbox:disabled + label::before {
+.platform-detail .checkbox:disabled + label::before {
   opacity: .5;
 }
 
-.platform-select .checkbox:disabled + label::after {
+.platform-detail .checkbox:disabled + label::after {
   opacity: 1;
   content: '\00D7';
   color: var(--red-shadow);
@@ -287,12 +287,12 @@ button:active {
   transition: opacity 100ms ease;
 }
 
-.platform-select .checkbox:checked + label::after {
+.platform-detail .checkbox:checked + label::after {
   opacity: 1;
   transition: opacity 100ms ease;
 }
 
-.platform-select label::after {
+.platform-detail label::after {
   content: '';
   position: absolute;
   top: .5rem;
@@ -309,13 +309,13 @@ button:active {
   transition: opacity 100ms ease;
 }
 
-.platform-select label small {
+.platform-detail label small {
   display: block;
   font-size: .8rem;
   color: var(--gray-600);
 }
 
-.platform-select .platform-sales-input {
+.platform-detail .platform-sales-input {
   flex: 1;
   max-width: 50%;
   margin-left: auto;
@@ -396,6 +396,10 @@ button:active {
 }
 
 .platform-result-template {
+  display: none;
+}
+
+.total-results {
   display: none;
 }
 
