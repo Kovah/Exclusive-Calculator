@@ -107,9 +107,14 @@ h3 {
   margin: 0 0 1rem;
 }
 
+ol, ul {
+  padding-left: 1.7rem;
+}
+
 ol li,
 ul li {
   margin-bottom: .7rem;
+  padding-left: .2rem;
 }
 
 a {
