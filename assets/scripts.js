@@ -162,6 +162,24 @@ function calculatePlatformProfits () {
   }
 }
 
+/**
+ * Set the main platform which disables it for the "additional stores" select
+ * @param platform
+ */
+function setMainPlatform (platform) {
+  var $platformSelects = document.querySelectorAll('.platform-select');
+  var $mainPlatformDetail = document.querySelector('.platform-select[data-platform=' + platform + ']');
+
+  // Enable all selects
+  $platformSelects.forEach(function ($select) {
+    $select.querySelector('.checkbox').disabled = false;
+  });
+
+  // Disable the main platform
+  $mainPlatformDetail.querySelector('.checkbox').checked = false;
+  $mainPlatformDetail.querySelector('.checkbox').disabled = true;
+}
+
 window.onload = function () {
   console.log('Epic Shit Calculator v0.1 initialized');
 
@@ -169,8 +187,21 @@ window.onload = function () {
   window.app.loader = document.querySelector('.loader');
 
   var $numericInputs = document.querySelectorAll('[type=number]');
+  var $mainPlatformSelect = document.querySelector('#main-platform');
   var $platformSelects = document.querySelectorAll('.platform-select');
   var $calcButton = document.querySelector('.calculate');
+
+  // Add handler for changing the main platform
+  $mainPlatformSelect.addEventListener('change', function () {
+    console.log($mainPlatformSelect); //@DEBUG
+    var selectedIndex = $mainPlatformSelect.selectedIndex;
+    var selectedValue = $mainPlatformSelect.options[selectedIndex].value;
+
+    setMainPlatform(selectedValue);
+  });
+
+  // Set the initial option
+  setMainPlatform($mainPlatformSelect.options[0].value);
 
   // Generic handler for numeric input fields
   $numericInputs.forEach(function ($input) {

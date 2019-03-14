@@ -20,8 +20,9 @@
         store or not.
       </p>
       <ol>
-        <li>Enter both the amount of expected sales and your initial sales price.</li>
-        <li>Select at least one other platform.</li>
+        <li>Choose your primary platform you want to go exclusive with.</li>
+        <li>Enter both the amount of expected sales and your initial sales price for this platform.</li>
+        <li>Select at least one other platform and enter an expected sales amount for this platform.</li>
         <li>Press calculate.</li>
       </ol>
     </div>
@@ -29,6 +30,17 @@
     <form class="form">
 
       <div class="game-information">
+
+        <div class="input-group">
+          <label for="main-platform">Choose your exclusive Platform</label>
+          <select id="main-platform" class="form-input">
+            <option value="epic">Epic Store</option>
+            <option value="steam">Steam</option>
+            <option value="gog">GOG.com</option>
+            <option value="gmg">Green Man Gaming</option>
+            <option value="itch">Itch.io</option>
+          </select>
+        </div>
 
         <div class="input-group">
           <label for="expected-sales">Expected Sales</label>
@@ -53,8 +65,21 @@
 
       </div>
 
+      <div class="platform-select" data-share="12" data-platform="epic">
+        <input type="checkbox" id="platform-epic" class="checkbox">
+        <label for="platform-epic">
+          Epic Store
+          <small>Share is 12%</small>
+        </label>
+
+        <div class="platform-sales-input">
+          <input type="number" class="form-input" placeholder="Expected Sales on Epic Store" min="0" disabled>
+          <p class="error-message">Please enter a numeric value</p>
+        </div>
+      </div>
+
       <div class="platform-select" data-share="30" data-platform="steam">
-        <input type="checkbox" id="platform-steam" class="checkbox" data-share="30">
+        <input type="checkbox" id="platform-steam" class="checkbox">
         <label for="platform-steam">
           Steam
           <small>Share is 30%</small>
@@ -82,7 +107,7 @@
       <div class="platform-select" data-share="30" data-platform="gmg">
         <input type="checkbox" id="platform-gmg" class="checkbox">
         <label for="platform-gmg">
-          GreenManGaming
+          Green Man Gaming
           <small>Share is 30%</small>
         </label>
 
@@ -161,7 +186,8 @@
     </div>
 
     <div class="footer">
-      Epic Exclusive Generator is a project by <a href="https://kovah.de">Kovah.de</a> | All Rights belong to their respective owners.
+      Epic Exclusive Generator is a project by <a href="https://kovah.de">Kovah.de</a> | All Rights belong to their
+      respective owners.
     </div>
 
   </div>
