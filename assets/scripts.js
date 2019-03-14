@@ -14,11 +14,12 @@ window.app = {
     steam: 30,
     gog: 30,
     gmg: 30,
-    itch: 30
+    itch: 10
   },
   price: 0,
   funding: 0,
   platformProfits: 0,
+  results: {},
   mainPlatform: '',
   platforms: {
     epic: 'Epic Store',
@@ -33,8 +34,9 @@ window.app = {
  * Shorthand for the window.scrollTo function
  * @param $element
  */
-function scrollToElement ($element) {
-  window.scrollTo({top: $element.offsetTop, behavior: 'smooth'});
+function scrollToElement ($element, additionalOffset = 0) {
+  var offset = $element.offsetTop - additionalOffset;
+  window.scrollTo({top: offset, behavior: 'smooth'});
 }
 
 /**
@@ -77,21 +79,19 @@ function formatNumber (number) {
  * @returns {{finalPrice: string, totalSales: string, platformProfit: string, profit: string, platformShare: string}}
  */
 function calculateSales (platform, includeFunding = false) {
-  var totalSales = (window.app.price * window.app.expectedSales[platform]).toFixed(2);
+  var totalSales = window.app.price * window.app.expectedSales[platform];
 
   var share = window.app.price / 100 * window.app.shares[platform];
-  var finalPrice = (window.app.price - share).toFixed(2);
+  var finalPrice = window.app.price - share;
 
-  var platformShare = (window.app.price - finalPrice).toFixed(2);
-  var platformProfit = (window.app.expectedSales[platform] * platformShare).toFixed(2);
+  var platformShare = window.app.price - finalPrice;
+  var platformProfit = window.app.expectedSales[platform] * platformShare;
 
   var profit = window.app.expectedSales[platform] * finalPrice;
 
   if (includeFunding === true) {
-    profit += window.app.funding;
+    profit = profit + window.app.funding;
   }
-
-  profit = profit.toFixed(2);
 
   return {
     totalSales: totalSales,
@@ -136,11 +136,16 @@ function calculatePrimaryPlatformResults () {
   var platform = window.app.mainPlatform;
 
   var results = calculateSales(platform, true);
+  window.app.results[platform] = results;
+
   var $primaryResults = displayPlatformResult(platform, results, true);
 
   document.querySelector('.platform-results').style.display = 'block';
 
-  scrollToElement($primaryResults);
+  window.setTimeout(function(){
+    // Wait for the loader to disappear before scrolling to results
+    scrollToElement($primaryResults, 32);
+  }, 200);
 }
 
 /**
@@ -160,11 +165,45 @@ function calculateAdditionalPlatformResults () {
         // Add the platform profit to the total profit
         window.app.platformProfits += results.profit;
 
+        // Save results globally
+        window.app.results[platform] = results;
+
         // Display the reults
         displayPlatformResult(platform, results);
       }
     }
   });
+}
+
+function processTotalResults () {
+  // Calculate the difference between the primary platform and the additional platform profits
+  var mainPlatform = window.app.mainPlatform;
+
+  document.querySelectorAll('.total-exclusive-platform').forEach(function ($element) {
+    $element.innerHTML = window.app.platforms[mainPlatform];
+  });
+
+  var profitDifference = window.app.results[mainPlatform].profit - window.app.platformProfits;
+
+  if (profitDifference > 0) {
+
+    // Positive result, an exclusive release was a good decision
+    document.querySelector('.total-profit-positive').innerHTML = formatNumber(profitDifference);
+
+    document.querySelector('.total-negative').style.display = 'none';
+    document.querySelector('.total-positive').style.display = 'block';
+
+  } else {
+
+    // Negative result, an exclusive release was a bad decision
+    document.querySelector('.total-profit-negative').innerHTML = formatNumber(profitDifference * -1);
+
+    document.querySelector('.total-negative').style.display = 'block';
+    document.querySelector('.total-positive').style.display = 'none';
+
+  }
+
+  document.querySelector('.total-results').style.display = 'block';
 }
 
 /**
@@ -188,20 +227,19 @@ function setMainPlatform (platform) {
 }
 
 window.onload = function () {
-  console.log('Epic Shit Calculator v0.1 initialized');
-
   // Set global elements
   window.el.$loader = document.querySelector('.loader');
   window.el.$form = document.querySelector('.form');
   window.el.$platformDetails = document.querySelectorAll('.platform-detail');
   window.el.$platformResults = document.querySelector('.platform-results');
   window.el.$totalResults = document.querySelector('.total-results');
-  var $mainPlatformSelect = document.querySelector('#main-platform');
 
   // Reset the form
   window.el.$form.reset();
 
   // Add handler for changing the main platform
+  var $mainPlatformSelect = document.querySelector('#main-platform');
+
   $mainPlatformSelect.addEventListener('change', function () {
     var selectedIndex = $mainPlatformSelect.selectedIndex;
     var selectedValue = $mainPlatformSelect.options[selectedIndex].value;
@@ -234,7 +272,8 @@ window.onload = function () {
       $message.style.display = 'none';
     });
 
-    // Empty the existing results / hide total results
+    // Reset existing results
+    window.app.platformProfits = 0;
     window.el.$platformResults.innerHTML = '';
     window.el.$totalResults.style.display = 'none';
 
@@ -281,7 +320,7 @@ window.onload = function () {
       calculateAdditionalPlatformResults();
 
       // Calculate the difference between the profits
-      // @TODO
+      processTotalResults();
 
     }, 2000);
   });

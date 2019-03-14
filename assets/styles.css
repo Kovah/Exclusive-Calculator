@@ -131,6 +131,10 @@ h3 {
   color: var(--red);
 }
 
+.text-large {
+  font-size: var(--font-size-lg);
+}
+
 .monospace {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 95%;
@@ -399,8 +403,35 @@ button:active {
   display: none;
 }
 
-.total-results {
+
+/*============= Total results =============*/
+.total-results,
+.total-positive,
+.total-negative {
   display: none;
+}
+
+.total-results {
+  margin-top: 4rem;
+}
+
+.total-box {
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  color: var(--white);
+  font-size: var(--font-size-lg);
+}
+
+.total-positive {
+  background-color: var(--green);
+}
+
+.total-negative {
+  background-color: var(--red);
+}
+
+.total-profit {
+  font-size: var(--font-size-xl);
 }
 
 
