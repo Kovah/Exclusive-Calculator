@@ -89,6 +89,9 @@ function calculateSales (platform, includeFunding = false) {
 
   var profit = window.app.expectedSales[platform] * finalPrice;
 
+  // Add the platform profit to the total profit
+  window.app.platformProfits += profit;
+
   if (includeFunding === true) {
     profit = profit + window.app.funding;
   }
@@ -161,9 +164,6 @@ function calculateAdditionalPlatformResults () {
       // Calculate the results only if the
       if ($details.querySelector('.checkbox').checked) {
         var results = calculateSales(platform, false);
-
-        // Add the platform profit to the total profit
-        window.app.platformProfits += results.profit;
 
         // Save results globally
         window.app.results[platform] = results;
