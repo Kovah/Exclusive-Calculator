@@ -195,13 +195,14 @@ img {
   box-shadow: 0 0 4px var(--green-shadow);
 }
 
-.form-input:invalid:not(:empty) {
+.form-input:invalid:not(:placeholder-shown),
+.form-input:invalid:focus {
   border-color: var(--red);
   outline: none;
   box-shadow: 0 0 4px var(--red-shadow);
 }
 
-.form-input:invalid:not(:empty) + .error-message {
+.form-input:not(:placeholder-shown):invalid + .error-message {
   display: block;
 }
 
@@ -385,9 +386,9 @@ button.secondary:active {
 }
 
 .platform-detail .platform-sales-input {
-  flex: 1;
-  max-width: 50%;
+  width: 100%;
   margin-left: auto;
+  margin-top: 1rem;
 }
 
 /*============= Loader =============*/
@@ -415,9 +416,12 @@ button.secondary:active {
   display: inline-block;
   width: 20px;
   height: 20px;
-  margin-left: 1rem;
   border-radius: 100%;
   animation: loading 1s ease-in-out infinite;
+}
+
+.loading-element + .loading-element {
+  margin-left: 1rem;
 }
 
 .loading-element:nth-child(1) {
@@ -559,6 +563,14 @@ button.secondary:active {
 
 
 /*============= Media Queries =============*/
+@media screen and (min-width: 720px) {
+
+  .platform-detail .platform-sales-input {
+    width: 50%;
+    margin-top: 0;
+  }
+}
+
 @media screen and (min-width: 992px) {
 
   .form {
@@ -570,6 +582,8 @@ button.secondary:active {
   }
 }
 
+
+/*============= Animations =============*/
 @keyframes loading {
   0% {
     transform: scale(1);
