@@ -142,7 +142,7 @@ function calculatePrimaryPlatformResults () {
 
   document.querySelector('.platform-results').style.display = 'block';
 
-  window.setTimeout(function(){
+  window.setTimeout(function () {
     // Wait for the loader to disappear before scrolling to results
     scrollToElement($primaryResults, 32);
   }, 200);
@@ -324,4 +324,43 @@ window.onload = function () {
 
     }, 2000);
   });
+
+  handleCookiebanner();
 };
+
+function handleCookiebanner () {
+  var cookieID = 'exclusivecalc-consent';
+  var $cookieconsent = document.querySelector('.cookieconsent');
+  var $cookieButtons = $cookieconsent.querySelectorAll('.cookie-action');
+
+  var cookies = document.cookie.split(';');
+  if (typeof cookies !== 'object') return false;
+
+  var cookieFound = cookies.some(function (item) {
+    return item.indexOf(cookieID) !== -1;
+  });
+
+  if (cookieFound) {
+    $cookieconsent.style.display = 'none';
+    return;
+  }
+
+  $cookieButtons.forEach(function ($button) {
+    $button.addEventListener('click', function () {
+      var action = $button.dataset.action;
+
+      if (action === 'agree') {
+        if (typeof _paq !== 'undefined') {
+          _paq.push(['rememberConsentGiven']);
+        }
+      } else {
+        if (typeof _paq !== 'undefined') {
+          _paq.push(['forgetConsentGiven']);
+        }
+      }
+
+      document.cookie = cookieID + '=' + action;
+      $cookieconsent.style.display = 'none';
+    });
+  });
+}
