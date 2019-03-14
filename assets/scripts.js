@@ -193,7 +193,6 @@ window.onload = function () {
 
   // Add handler for changing the main platform
   $mainPlatformSelect.addEventListener('change', function () {
-    console.log($mainPlatformSelect); //@DEBUG
     var selectedIndex = $mainPlatformSelect.selectedIndex;
     var selectedValue = $mainPlatformSelect.options[selectedIndex].value;
 
