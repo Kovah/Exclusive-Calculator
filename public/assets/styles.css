@@ -161,6 +161,10 @@ img {
   color: var(--red);
 }
 
+.text-muted {
+  color: var(--text-muted);
+}
+
 .text-large {
   font-size: var(--font-size-lg);
 }
