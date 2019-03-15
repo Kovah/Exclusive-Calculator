@@ -68,7 +68,8 @@ function hideLoader () {
  * @returns {*}
  */
 function formatNumber (number) {
-  return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'})
+  var locale = navigator.language ? navigator.language : 'en-US';
+  return new Intl.NumberFormat(locale, {style: 'currency', currency: 'USD'})
     .format(number);
 }
 
