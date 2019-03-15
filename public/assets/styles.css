@@ -60,7 +60,7 @@ body {
   font-weight: 300;
   line-height: 1.5;
   color: var(--white);
-  background: url('bg.jpg') top center no-repeat var(--black);
+  background: url("../assets/bg.jpg") top center no-repeat var(--black);
   background-size: contain;
 }
 
