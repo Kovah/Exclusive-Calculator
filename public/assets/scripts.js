@@ -329,6 +329,9 @@ window.onload = function () {
       // Calculate the difference between the profits
       processTotalResults();
 
+      // Track form submission (only if consent given, no values submtted)
+      _paq.push(['trackGoal', 1]);
+
     }, 2000);
   });
 
