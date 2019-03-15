@@ -356,7 +356,7 @@ function handleCookiebanner () {
     $button.addEventListener('click', function () {
       var action = $button.dataset.action;
 
-      if (action === 'agree') {
+      if (action === 'accept') {
         if (typeof _paq !== 'undefined') {
           _paq.push(['rememberConsentGiven']);
         }
