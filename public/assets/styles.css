@@ -534,30 +534,6 @@ button.secondary:active {
 }
 
 
-/*============= Cookie consent =============*/
-.cookieconsent {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  padding: .5rem 1rem;
-  color: var(--text-muted);
-  font-size: var(--font-size-sm);
-  background: var(--gray-900);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
-}
-
-.cookie-disclaimer {
-  margin-right: 1rem;
-}
-
-.cookie-buttons {
-  margin-left: auto;
-}
-
-
 /*============= About page =============*/
 .about h2,
 .about h3 {

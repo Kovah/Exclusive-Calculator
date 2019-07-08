@@ -236,8 +236,7 @@ window.onload = function () {
   window.el.$totalResults = document.querySelector('.total-results');
 
   if (window.el.$form === null) {
-    // Bail out, that's the about page, but enable the cookie banner
-    handleCookiebanner();
+    // Bail out, that's the about page
     return;
   }
 
@@ -334,43 +333,4 @@ window.onload = function () {
 
     }, 2000);
   });
-
-  handleCookiebanner();
 };
-
-function handleCookiebanner () {
-  var cookieID = 'exclusivecalc-consent';
-  var $cookieconsent = document.querySelector('.cookieconsent');
-  var $cookieButtons = $cookieconsent.querySelectorAll('.cookie-action');
-
-  var cookies = document.cookie.split(';');
-  if (typeof cookies !== 'object') return false;
-
-  var cookieFound = cookies.some(function (item) {
-    return item.indexOf(cookieID) !== -1;
-  });
-
-  if (cookieFound) {
-    $cookieconsent.style.display = 'none';
-    return;
-  }
-
-  $cookieButtons.forEach(function ($button) {
-    $button.addEventListener('click', function () {
-      var action = $button.dataset.action;
-
-      if (action === 'accept') {
-        if (typeof _paq !== 'undefined') {
-          _paq.push(['rememberConsentGiven']);
-        }
-      } else {
-        if (typeof _paq !== 'undefined') {
-          _paq.push(['forgetConsentGiven']);
-        }
-      }
-
-      document.cookie = cookieID + '=' + action;
-      $cookieconsent.style.display = 'none';
-    });
-  });
-}

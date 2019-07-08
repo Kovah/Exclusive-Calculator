@@ -245,37 +245,25 @@
 
   </div>
 
-  <div class="cookieconsent">
-    <div class="cookie-disclaimer">
-      This site uses cookies. Do not track is valued. All calculations are done in your browser, no values are being sent to our server.
-    </div>
-    <div class="cookie-buttons">
-      <button type="button" class="cookie-action small secondary" data-action="decline">Decline</button>
-      <button type="button" class="cookie-action small" data-action="accept">Accept</button>
-    </div>
-  </div>
-
 </div>
 
 <script src="./assets/scripts.js"></script>
 
-<!-- Matomo -->
-<script type="text/javascript">
-  var _paq = window._paq || [];
-  _paq.push(['setDoNotTrack', true]);
-  _paq.push(['requireConsent']);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="https://analytics.kovah.de/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '25']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
+<!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
+<script>
+  (function(f, a, t, h, o, m){
+    a[h]=a[h]||function(){
+      (a[h].q=a[h].q||[]).push(arguments)
+    };
+    o=f.createElement('script'),
+      m=f.getElementsByTagName('script')[0];
+    o.async=1; o.src=t; o.id='fathom-script';
+    m.parentNode.insertBefore(o,m)
+  })(document, window, '//stats.kovah.de/tracker.js', 'fathom');
+  fathom('set', 'siteId', 'OBCPO');
+  fathom('trackPageview');
 </script>
-<noscript><p><img src="//analytics.kovah.de/matomo.php?idsite=25&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-<!-- End Matomo Code -->
+<!-- / Fathom -->
 
 </body>
 </html>
